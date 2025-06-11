@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | AI Summarizer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #0F172A;
+      color: #F3F4F6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 1rem;
+    }
+
+    .login-container {
+      background-color: #1E293B;
+      padding: 2rem;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    h2 {
+      text-align: center;
+      color: #22D3EE;
+      margin-bottom: 2rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 8px;
+      background: #334155;
+      color: #F3F4F6;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, #22D3EE, #3B82F6);
+      color: #0F172A;
+      font-weight: bold;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #0EA5E9, #2563EB);
+    }
+
+    .footer {
+      text-align: center;
+      color: #94A3B8;
+      font-size: 0.85rem;
+      margin-top: 1rem;
+    }
+  </style>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDtB8CwRtNGuwsMGB2EupSSgPbGb1x9P_A",
+      authDomain: "yourautosummarize.firebaseapp.com",
+      projectId: "yourautosummarize",
+      storageBucket: "yourautosummarize.appspot.com",
+      messagingSenderId: "821690417626",
+      appId: "1:821690417626:web:9a8c2a79e37a51853500e3",
+      measurementId: "G-Y6BC7XK05S"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(() => {
+          alert("Login successful!");
+          window.location.href = "index.html";
+        })
+        .catch((error) => {
+          alert("Login error: " + error.message);
+        });
+    }
+
+    function signup() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          alert("Sign up successful!");
+          window.location.href = "index.html";
+        })
+        .catch((error) => {
+          alert("Signup error: " + error.message);
+        });
+    }
+  </script>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Welcome Back</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <button onclick="signup()">Sign Up</button>
+    <div class="footer">&copy; 2025 YourAutoSummarize</div>
+  </div>
+</body>
+</html>

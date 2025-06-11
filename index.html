@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>yourAutoSummarize</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Waiting+for+the+Sunrise&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #0F172A;
+      color: #F3F4F6;
+      padding: 0 1rem;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background-color: #1E293B;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    }
+
+    .brand-title {
+      font-family: 'Waiting for the Sunrise', cursive;
+      font-size: 1.75rem;
+      color: #22D3EE;
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .auth-buttons a,
+    .auth-buttons button {
+      background: none;
+      border: none;
+      color: #22D3EE;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: underline;
+      font-size: 1rem;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 2rem auto;
+      background-color: #1E293B;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 600;
+      color: #E5E7EB;
+    }
+
+    textarea,
+    input[type="number"] {
+      width: 100%;
+      margin-top: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      background: #334155;
+      color: #F3F4F6;
+      font-size: 1rem;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      margin-top: 2rem;
+      padding: 1rem;
+      background: linear-gradient(to right, #22D3EE, #3B82F6);
+      color: #0F172A;
+      font-weight: bold;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background: linear-gradient(to right, #0EA5E9, #2563EB);
+    }
+
+    .output, .rouge-scores {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: #0F172A;
+      border: 2px solid #22D3EE;
+      border-radius: 10px;
+      color: #E0F2FE;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 2rem;
+      color: #64748B;
+      font-size: 0.85rem;
+    }
+  </style>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDtB8CwRtNGuwsMGB2EupSSgPbGb1x9P_A",
+      authDomain: "yourautosummarize.firebaseapp.com",
+      projectId: "yourautosummarize",
+      storageBucket: "yourautosummarize.appspot.com",
+      messagingSenderId: "821690417626",
+      appId: "1:821690417626:web:9a8c2a79e37a51853500e3",
+      measurementId: "G-Y6BC7XK05S"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    function logout() {
+      firebase.auth().signOut().then(() => {
+        alert("Logged out!");
+        location.reload();
+      });
+    }
+
+    window.onload = function () {
+      const loginBtn = document.getElementById("loginBtn");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const userStatus = document.getElementById("user-status");
+
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          userStatus.innerText = "Hi, " + user.email;
+          loginBtn.style.display = "none";
+          logoutBtn.style.display = "inline-block";
+        } else {
+          userStatus.innerText = "Hi, Guest";
+          loginBtn.style.display = "inline-block";
+          logoutBtn.style.display = "none";
+        }
+      });
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="brand-title">yourAutoSummarize</div>
+    <div class="auth-buttons">
+      <span id="user-status">Hi,</span>
+      <a href="login.html" id="loginBtn">Login</a>
+      <button id="logoutBtn" onclick="logout()" style="display: none;">Logout</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <form id="summarizeForm">
+      <label for="inputText">Input Text</label>
+      <textarea id="inputText" rows="8" placeholder="Paste your text here..."></textarea>
+
+      <label for="minLength">Minimum Summary Length</label>
+      <input type="number" id="minLength" value="60">
+
+      <label for="maxLength">Maximum Summary Length</label>
+      <input type="number" id="maxLength" value="120">
+
+      <label for="referenceText">Reference Summary (optional)</label>
+      <textarea id="referenceText" rows="4" placeholder="Optional reference summary..."></textarea>
+
+      <button type="submit">✨ Summarize</button>
+    </form>
+
+    <div id="output" class="output">
+      <div class="summary-box">Your summary will appear here.</div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 yourAutoSummarize. All rights reserved.
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
